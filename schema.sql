@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS fitness_app;
+USE fitness_app;
+
+CREATE TABLE IF NOT EXISTS fitness_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    weight DECIMAL(5,2) NOT NULL,
+    height DECIMAL(5,2) NOT NULL,
+    bmi DECIMAL(4,2) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    log_date DATETIME NOT NULL
+);

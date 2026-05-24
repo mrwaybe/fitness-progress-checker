@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>BMI / Fitness Progress Checker</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 

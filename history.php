@@ -23,11 +23,11 @@
     <?php
     require_once 'db.php';
 
-    $sql = "SELECT f.log_date, f.weight, f.height, f.bmi, f.bmi_category, m.protein_g 
+    $sql = "SELECT f.log_date, f.weight, f.height, f.bmi, f.bmi_category, 
+                   (SELECT m.protein_g FROM daily_macros m WHERE m.user_id = f.user_id AND m.log_date = f.log_date ORDER BY m.id DESC LIMIT 1) as protein_g 
             FROM fitness_logs f 
-            LEFT JOIN daily_macros m ON f.user_id = m.user_id AND f.log_date = m.log_date 
             WHERE f.user_id = 1 
-            ORDER BY f.log_date DESC";
+            ORDER BY f.id DESC";
             
     $stmt = $pdo->query($sql);
     $logs = $stmt->fetchAll();
@@ -36,13 +36,14 @@
         echo "<table>";
         echo "<tr><th>Date</th><th>Weight (kg)</th><th>Height (cm)</th><th>BMI</th><th>Category</th><th>Protein (g)</th></tr>";
         foreach ($logs as $log) {
+            $protein = isset($log['protein_g']) ? $log['protein_g'] : '0';
             echo "<tr>";
             echo "<td>" . htmlspecialchars($log['log_date']) . "</td>";
             echo "<td>" . htmlspecialchars($log['weight']) . "</td>";
             echo "<td>" . htmlspecialchars($log['height']) . "</td>";
             echo "<td>" . htmlspecialchars($log['bmi']) . "</td>";
             echo "<td>" . htmlspecialchars($log['bmi_category']) . "</td>";
-            echo "<td>" . htmlspecialchars($log['protein_g'] ?? '0') . "</td>";
+            echo "<td>" . htmlspecialchars($protein) . "</td>";
             echo "</tr>";
         }
         echo "</table>";

@@ -1,9 +1,8 @@
 <?php
-// db.php
-$host = '127.0.0.1';
-$db   = 'fitness_app';
-$user = 'root'; // Update with your database username
-$pass = '';     // Update with your database password
+$host = 'localhost';
+$db   = 'fitness_tracker';
+$user = 'fitness_user';
+$pass = 'secure_password'; // Replace with the password set during installation
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
@@ -16,6 +15,7 @@ $options = [
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (\PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
+    // In a production environment, errors should be logged rather than displayed
+    exit("Database connection failed: " . $e->getMessage());
 }
 ?>
